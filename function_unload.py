@@ -9,7 +9,7 @@ def get_html(fund,type_url):
 
     try:
         headers = {
-            "User-Agent": "Mozilla/5.0"  # Agrega un agente de usuario para simular un navegador web
+            "User-Agent": "Edg/91.0.864.48"  # Agrega un agente de usuario para simular un navegador web
         }
 
         response = requests.get(url, headers=headers)
@@ -46,28 +46,28 @@ def get_table(html_text):
 def transform_df_serie(df,fund):
     
     nuevos_nombres = {
-    'Serie': 'serie',
-    'Característica': 'caracteristica',
-    'Fecha Inicio': 'fecha_inicio',
-    'Fecha Término': 'fecha_termino',
-    'Valor inicial cuota': 'valor_cuota_inicial',
-    'Continuadora de serie': 'continuadora_serie'
+    'Serie': 'Serie',
+    'Característica': 'Caracteristica',
+    'Fecha Inicio': 'Fecha_Incio',
+    'Fecha Término': 'Fecha_Termino',
+    'Valor inicial cuota': 'Valor_Inicial_cuota',
+    'Continuadora de serie': 'Continuadora_Serie'
     }
 
     df = df.rename(columns=nuevos_nombres)
     # Cambiar el tipo de serie y caracteristica a texto
-    df['serie'] = df['serie'].astype(str)
-    df['caracteristica'] = df['caracteristica'].astype(str)
+    df['Serie'] = df['Serie'].astype(str)
+    df['Caracteristica'] = df['Caracteristica'].astype(str)
 
     # Cambiar el tipo de fecha_inicio y fecha_termino a fecha sin hora
-    df['fecha_inicio'] = pd.to_datetime(df['fecha_inicio'],format='%d/%m/%Y', errors='coerce').dt.date
-    df['fecha_termino'] = pd.to_datetime(df['fecha_termino'],format='%d/%m/%Y', errors='coerce').dt.date
+    df['Fecha_Incio'] = pd.to_datetime(df['Fecha_Incio'],format='%d/%m/%Y', errors='coerce').dt.date
+    df['Fecha_Termino'] = pd.to_datetime(df['Fecha_Termino'],format='%d/%m/%Y', errors='coerce').dt.date
 
     # Cambiar el tipo de valor_cuota_inicial a valor numérico
-    df['valor_cuota_inicial'] = df['valor_cuota_inicial'].astype(float)
+    df['Valor_Inicial_cuota'] = df['Valor_Inicial_cuota'].astype(float)
 
     # Cambiar el tipo de continuadora_serie a texto
-    df['continuadora_serie'] = df['continuadora_serie'].astype(str) 
+    df['Continuadora_Serie'] = df['Continuadora_Serie'].astype(str) 
     df['run_fm']=fund
 
     df=transform_null(df)
@@ -81,21 +81,21 @@ def transform_df_detalle_fondo(df, fund):
 
     # Diccionario de nuevos nombres de columnas
     nuevos_nombres = {
-        'R.U.N. Fondo Mutuo': 'run_fondo_largo',
-        'Nombre Fondo Mutuo': 'nombre_fondo',
-        'Nombre Corto': 'nombre_fm_corto',
-        'Vigencia': 'vigencia',
-        'Estado (indica si fondo está liquidado)': 'estado',
-        'Tipo de Fondo Mutuo': 'tipo_fondo',
-        'R.U.T. Administradora': 'rut_adm',
-        'Razón Social Administradora': 'razon_social_adm',
-        'Fecha Depósito Fondo Mutuo': 'fecha_deposito',
-        'Fecha Ultima Modificación': 'fecha_ult_modificacion',
-        'Fecha Inicio Operaciones': 'fecha_inicio_operaciones',
-        'Nro. y Fecha de Resolución Aprobatoria': 'n_resolucion',
-        'Fecha cumplimiento, art. 11 D.L 1.328': 'fecha_cumplimiento',
-        'Fecha Término Operaciones': 'fecha_termino',
-        'Número de Registro': 'numero_registro'
+        'R.U.N. Fondo Mutuo': 'Run_Fondo_Mutuo',
+        'Nombre Fondo Mutuo': 'Nombre_Fondo_Mutuo',
+        'Nombre Corto': 'Nombre_corto',
+        'Vigencia': 'Vigencia',
+        'Estado (indica si fondo está liquidado)': 'Estado',
+        'Tipo de Fondo Mutuo': 'Tipo_Fondo_Mutuo',
+        'R.U.T. Administradora': 'Rut_Administradora',
+        'Razón Social Administradora': 'Razon_Social_Administradora',
+        'Fecha Depósito Fondo Mutuo': 'Fecha_Deposito_Fondo_Mutuo',
+        'Fecha Ultima Modificación': 'Fecha_Ultima_Modificacion',
+        'Fecha Inicio Operaciones': 'Fecha_inicio_Operacion',
+        'Nro. y Fecha de Resolución Aprobatoria': 'Nro_Fecha_Resolucion_Aprobatoria',
+        'Fecha cumplimiento, art. 11 D.L 1.328': 'Fecha_Cumplimiento',
+        'Fecha Término Operaciones': 'Fecha_Termino_Operacion',
+        'Número de Registro': 'Nro_Registro'
     }
 
     # Renombrar las columnas en el DataFrame
@@ -105,8 +105,8 @@ def transform_df_detalle_fondo(df, fund):
     df_aux['run_fm'] = fund
 
     # Aplicar el formato de fecha a las columnas necesarias
-    date_columns = ['fecha_deposito', 'fecha_ult_modificacion', 'fecha_inicio_operaciones',
-                    'fecha_cumplimiento', 'fecha_termino']
+    date_columns = ['Fecha_Deposito_Fondo_Mutuo', 'Fecha_Ultima_Modificacion', 'Fecha_inicio_Operacion',
+                    'Fecha_Cumplimiento', 'Fecha_Termino_Operacion']
     for column in date_columns:
         df_aux[column] = pd.to_datetime(df_aux[column], format='%d/%m/%Y', errors='coerce').dt.date
 
@@ -132,9 +132,9 @@ def insert_tb_series(df,connection):
         # Iterar a través de las filas del DataFrame e insertar en la tabla
      for index, row in df.iterrows():
          # Aquí debe modificar, asegúrate de que los nombres de las columnas coincidan con la tabla
-         sql_query = "INSERT INTO series (run_fm, serie, caracteristica, fecha_inicio, fecha_termino, valor_cuota_inicial, continuadora_serie) VALUES (%s, %s, %s, %s, %s, %s, %s)"  # Reemplaza con los nombres de tus columnas
+         sql_query = "INSERT INTO series (run_fm, Serie, Caracteristica, Fecha_Incio, Fecha_Termino, Valor_Inicial_cuota, Continuadora_Serie) VALUES (%s, %s, %s, %s, %s, %s, %s)"  # Reemplaza con los nombres de tus columnas
          # Ejecutar la inserción con los valores de la fila actual
-         connection.cursor().execute(sql_query, (row['run_fm'], row['serie'], row['caracteristica'], row['fecha_inicio'], row['fecha_termino'], row['valor_cuota_inicial'], row['continuadora_serie']))
+         connection.cursor().execute(sql_query, (row['run_fm'], row['Serie'], row['Caracteristica'], row['Fecha_Incio'], row['Fecha_Termino'], row['Valor_Inicial_cuota'], row['Continuadora_Serie']))
          # Confirmar la transacción
          connection.commit()
 
@@ -142,7 +142,7 @@ def insert_tb_detalle_fondo(df,connection):
             # Iterar a través de las filas del DataFrame e insertar en la tabla
     for index, row in df.iterrows():
         # Aquí debe modificar, asegúrate de que los nombres de las columnas coincidan con la tabla
-        sql_query = "INSERT INTO detalle_fondo (run_fm,run_fondo_largo,nombre_fondo,nombre_fm_corto,vigencia,estado,tipo_fondo,rut_adm,razon_social_adm,fecha_deposito,fecha_ult_modificacion,fecha_inicio_operaciones,n_resolucion,fecha_cumplimiento,fecha_termino,numero_registro) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"  # Reemplaza con los nombres de tus columnas
+        sql_query = "INSERT INTO detalle_fondo (run_fm,Run_Fondo_Mutuo,Nombre_Fondo_Mutuo,Nombre_corto,Vigencia,Estado,Tipo_Fondo_Mutuo,Rut_Administradora,Razon_Social_Administradora,Fecha_Deposito_Fondo_Mutuo,Fecha_Ultima_Modificacion,fecha_inicio_operaciones,Nro_Fecha_Resolucion_Aprobatoria,Fecha_Cumplimiento,Fecha_Termino_Operacion,Nro_Registro) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"  # Reemplaza con los nombres de tus columnas
         # Ejecutar la inserción con los valores de la fila actual
-        connection.cursor().execute(sql_query, (row['run_fm'],row['run_fondo_largo'],row['nombre_fondo'],row['nombre_fm_corto'],row['vigencia'],row['estado'],row['tipo_fondo'],row['rut_adm'],row['razon_social_adm'],row['fecha_deposito'],row['fecha_ult_modificacion'],row['fecha_inicio_operaciones'],row['n_resolucion'],row['fecha_cumplimiento'],row['fecha_termino'],row['numero_registro']))
+        connection.cursor().execute(sql_query, (row['run_fm'],row['Run_Fondo_Mutuo'],row['Nombre_Fondo_Mutuo'],row['Nombre_corto'],row['Vigencia'],row['Estado'],row['Tipo_Fondo_Mutuo'],row['Rut_Administradora'],row['Razon_Social_Administradora'],row['Fecha_Deposito_Fondo_Mutuo'],row['Fecha_Ultima_Modificacion'],row['Fecha_inicio_Operacion'],row['Nro_Fecha_Resolucion_Aprobatoria'],row['Fecha_Cumplimiento'],row['Fecha_Termino_Operacion'],row['Nro_Registro']))
         # Confirmar la transacción

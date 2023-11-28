@@ -48,7 +48,7 @@ def transform_df_serie(df,fund):
     nuevos_nombres = {
     'Serie': 'Serie',
     'Característica': 'Caracteristica',
-    'Fecha Inicio': 'Fecha_Incio',
+    'Fecha Inicio': 'Fecha_Inicio',
     'Fecha Término': 'Fecha_Termino',
     'Valor inicial cuota': 'Valor_Inicial_cuota',
     'Continuadora de serie': 'Continuadora_Serie'
@@ -60,7 +60,7 @@ def transform_df_serie(df,fund):
     df['Caracteristica'] = df['Caracteristica'].astype(str)
 
     # Cambiar el tipo de fecha_inicio y fecha_termino a fecha sin hora
-    df['Fecha_Incio'] = pd.to_datetime(df['Fecha_Incio'],format='%d/%m/%Y', errors='coerce').dt.date
+    df['Fecha_Inicio'] = pd.to_datetime(df['Fecha_Inicio'],format='%d/%m/%Y', errors='coerce').dt.date
     df['Fecha_Termino'] = pd.to_datetime(df['Fecha_Termino'],format='%d/%m/%Y', errors='coerce').dt.date
 
     # Cambiar el tipo de valor_cuota_inicial a valor numérico
@@ -132,9 +132,9 @@ def insert_tb_series(df,connection):
         # Iterar a través de las filas del DataFrame e insertar en la tabla
      for index, row in df.iterrows():
          # Aquí debe modificar, asegúrate de que los nombres de las columnas coincidan con la tabla
-         sql_query = "INSERT INTO series (run_fm, Serie, Caracteristica, Fecha_Incio, Fecha_Termino, Valor_Inicial_cuota, Continuadora_Serie) VALUES (%s, %s, %s, %s, %s, %s, %s)"  # Reemplaza con los nombres de tus columnas
+         sql_query = "INSERT INTO series (run_fm, Serie, Caracteristica, Fecha_Inicio, Fecha_Termino, Valor_Inicial_cuota, Continuadora_Serie) VALUES (%s, %s, %s, %s, %s, %s, %s)"  # Reemplaza con los nombres de tus columnas
          # Ejecutar la inserción con los valores de la fila actual
-         connection.cursor().execute(sql_query, (row['run_fm'], row['Serie'], row['Caracteristica'], row['Fecha_Incio'], row['Fecha_Termino'], row['Valor_Inicial_cuota'], row['Continuadora_Serie']))
+         connection.cursor().execute(sql_query, (row['run_fm'], row['Serie'], row['Caracteristica'], row['Fecha_Inicio'], row['Fecha_Termino'], row['Valor_Inicial_cuota'], row['Continuadora_Serie']))
          # Confirmar la transacción
          connection.commit()
 

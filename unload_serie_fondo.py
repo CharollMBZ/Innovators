@@ -5,9 +5,9 @@ import pg8000
 def main():
     #  Aqui se debe modificar. Parámetros de conexión a la base de datos,
     db_params = {
-        'database': 'ProyectoIN',
+        'database': 'Rangers',
         'user': 'postgres',
-        'password': 'C2116',
+        'password': 'amazander123',
         'host': 'localhost',
         'port': 5432
     }
@@ -16,7 +16,7 @@ def main():
     connection = pg8000.connect(**db_params)
 
     #  Aqui se debe modificar, se deben agregar cada de las categorias asignadas separados por , 
-    funds=['8076']
+    funds=['8918']
 
     # El tipo 14 es la url respecto a las series del fondo y el 1 es respecto al detalle del fondo
     types_url=['14','1']

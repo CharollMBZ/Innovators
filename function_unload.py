@@ -142,7 +142,8 @@ def insert_tb_detalle_fondo(df,connection):
             # Iterar a través de las filas del DataFrame e insertar en la tabla
     for index, row in df.iterrows():
         # Aquí debe modificar, asegúrate de que los nombres de las columnas coincidan con la tabla
-        sql_query = "INSERT INTO detalle_fondo (run_fm,Run_Fondo_Mutuo,Nombre_Fondo_Mutuo,Nombre_corto,Vigencia,Estado,Tipo_Fondo_Mutuo,Rut_Administradora,Razon_Social_Administradora,Fecha_Deposito_Fondo_Mutuo,Fecha_Ultima_Modificacion,fecha_inicio_operaciones,Nro_Fecha_Resolucion_Aprobatoria,Fecha_Cumplimiento,Fecha_Termino_Operacion,Nro_Registro) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"  # Reemplaza con los nombres de tus columnas
+        sql_query = "INSERT INTO detalle_fondo (run_fm,Run_Fondo_Mutuo,Nombre_Fondo_Mutuo,Nombre_corto,Vigencia,Estado,Tipo_Fondo_Mutuo,Rut_Administradora,Razon_Social_Administradora,Fecha_Deposito_Fondo_Mutuo,Fecha_Ultima_Modificacion,Fecha_inicio_Operacion,Nro_Fecha_Resolucion_Aprobatoria,Fecha_Cumplimiento,Fecha_Termino_Operacion,Nro_Registro) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"  # Reemplaza con los nombres de tus columnas
         # Ejecutar la inserción con los valores de la fila actual
         connection.cursor().execute(sql_query, (row['run_fm'],row['Run_Fondo_Mutuo'],row['Nombre_Fondo_Mutuo'],row['Nombre_corto'],row['Vigencia'],row['Estado'],row['Tipo_Fondo_Mutuo'],row['Rut_Administradora'],row['Razon_Social_Administradora'],row['Fecha_Deposito_Fondo_Mutuo'],row['Fecha_Ultima_Modificacion'],row['Fecha_inicio_Operacion'],row['Nro_Fecha_Resolucion_Aprobatoria'],row['Fecha_Cumplimiento'],row['Fecha_Termino_Operacion'],row['Nro_Registro']))
         # Confirmar la transacción
+        connection.commit()

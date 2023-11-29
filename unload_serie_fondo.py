@@ -16,7 +16,7 @@ def main():
     connection = pg8000.connect(**db_params)
 
     #  Aqui se debe modificar, se deben agregar cada de las categorias asignadas separados por , 
-    funds=['8305']
+    funds=['8076']
 
     # El tipo 14 es la url respecto a las series del fondo y el 1 es respecto al detalle del fondo
     types_url=['14','1']
